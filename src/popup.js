@@ -1,4 +1,4 @@
-  document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   // --- DOM Elements ---
   const toggle = document.getElementById("enabled-toggle");
   const opacitySlider = document.getElementById("opacity-slider");
@@ -110,7 +110,7 @@
         button.style.backgroundColor = preset.color;
         // Set text color based on background luminance for readability
         button.style.color = isColorDark(preset.color) ? "#fff" : "#333";
-        button.innerHTML = `<span>${preset.name}</span>`;
+        button.innerHTML = `<span class="preset-name">${preset.name}</span>`;
         buttonsContainer.appendChild(button);
       });
 

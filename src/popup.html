@@ -1,31 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link href="fonts.css" rel="stylesheet" type="text/css" />
     <title>Telsia Settings</title>
     <style>
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Helvetica, Arial, sans-serif;
+        font-family: "Comic Neue";
         margin: 12px;
         min-width: 220px; /* Increased width for presets */
         background-color: #f7f7f7;
       }
       .title {
-        font-size: 16px;
+        font-size: 20px;
         font-weight: bold;
         margin-bottom: 8px;
       }
       .subtitle {
-        font-size: 14px;
+        font-size: 16px;
         font-weight: bold;
-        color: #666;
         margin-bottom: 8px;
       }
       .container {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 14px;
+        font-size: 16px;
         color: #333;
         margin-bottom: 12px;
       }
@@ -98,21 +97,24 @@
       }
       /* Preset Styles */
       .preset-group h3 {
-        font-size: 12px;
+        font-size: 14px;
         color: #666;
         margin: 12px 0 8px 0;
-        font-weight: 500;
+      }
+      .preset-name {
+        font-family: "Comic Neue";
+        font-size: 13px;
       }
       .preset-buttons {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 8px;
       }
-            .preset-button {
+      .preset-button {
         display: flex;
         align-items: center;
         justify-content: center; /* Center text horizontally */
-        border: 1px solid rgba(0,0,0,0.2); /* Subtle border */
+        border: 1px solid rgba(0, 0, 0, 0.2); /* Subtle border */
         border-radius: 4px;
         padding: 8px 6px; /* Increased padding for better look */
         font-size: 12px;
