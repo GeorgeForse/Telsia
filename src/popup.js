@@ -2,9 +2,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   // --- DOM Elements ---
   const toggle = document.getElementById("enabled-toggle");
   const opacitySlider = document.getElementById("opacity-slider");
-  const colorPicker = document.getElementById("color-picker");
+  const colorPicker = document.getElementById("colour-picker");
   const toggleWarning = document.getElementById("toggle-warning");
   const presetsContainer = document.getElementById("presets-container");
+  const helpIcon = document.getElementById("help-icon");
 
   // --- State ---
   let saveTimeout = null;
@@ -139,7 +140,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Set the initial enabled/disabled state of the controls.
   updateUiState();
 
-  // --- Event Listeners ---
+  helpIcon.addEventListener("click", () => {
+    alert(
+      "Telsia is a screen overlay tool to help with visual stress.\n\n" +
+        "- Enable/Disable: Turn the overlay on or off.\n" +
+        "- Colour: Choose a colour for the overlay.\n" +
+        "- Intensity: Adjust the transparency of the overlay.\n" +
+        "- Presets: Quickly select a pre-configured setting.\n\n" +
+        "Telsia is unable to add an overlay to internal browser pages such as the New Tab Page and Settings pages due to limitations of the extension system.\n\n" +
+        "If this extension is managed by your organization, some settings may be disabled."
+    );
+  });
 
   toggle.addEventListener("change", () => {
     updateUiState();

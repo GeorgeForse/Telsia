@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Telsia!</title>
+    <link href="fonts.css" rel="stylesheet" type="text/css" />
+    <style>
+      body {
+        font-family: "Comic Neue";
+        margin: 20px;
+        text-align: center;
+        background-color: antiquewhite;
+        color: rgb(85, 76, 85);
+      }
+      h1 {
+        font-size: 48px;
+        font-weight: bold;
+      }
+      p {
+        font-size: 24px;
+      }
+      video {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        filter: sepia(0.25);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to Telsia!</h1>
+    <img src="/images/icon128.png" alt="Telsia Icon" />
+    <p>
+      Telsia helps reduce eye strain and related issues with a custom colour
+      overlay.
+    </p>
+    <p>
+      To get started, pin the Telsia icon to your browser toolbar, and then
+      click Telsia to open the settings.
+    </p>
+    <video src="images/onboarding.mp4" autoplay loop muted></video>
+  <script>
+      document.addEventListener('DOMContentLoaded', (event) => {
+        const video = document.querySelector('video');
+        if (video) {
+          video.playbackRate = 0.75;
+        }
+      });
+    </script>
+  </body>
+</html>

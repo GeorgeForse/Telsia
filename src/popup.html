@@ -8,12 +8,25 @@
         font-family: "Comic Neue";
         margin: 12px;
         min-width: 220px; /* Increased width for presets */
-        background-color: #f7f7f7;
+        background-color: #eae8de;
+      }
+      .title-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
       }
       .title {
         font-size: 20px;
         font-weight: bold;
-        margin-bottom: 8px;
+      }
+      .help-icon {
+        font-size: large;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .help-icon:hover {
+        background-color: #f0f0f0;
       }
       .subtitle {
         font-size: 16px;
@@ -127,7 +140,10 @@
     </style>
   </head>
   <body>
-    <span class="title">Telsia Settings</span>
+    <div class="title-container">
+      <span class="title">Telsia Settings</span>
+      <span id="help-icon" class="help-icon" title="Click for help">?</span>
+    </div>
     <hr />
     <div class="container">
       <span>Enable Overlay</span>
@@ -146,8 +162,8 @@
       "
     ></div>
     <div class="container">
-      <label for="color-picker">Color</label>
-      <input type="color" id="color-picker" />
+      <label for="colour-picker">Colour</label>
+      <input type="color" id="colour-picker" />
     </div>
     <div class="container">
       <label for="opacity-slider">Intensity</label>

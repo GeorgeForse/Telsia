@@ -1,9 +1,11 @@
-const defaultSettings = { enabled: true, color: "#f7f7f7", opacity: 0.5 };
+const defaultSettings = { enabled: false, color: "#FADADD", opacity: 0.25 };
 const overlayId = "TelsiaOverlay";
 
 async function updateOverlay() {
   let overlay = document.getElementById(overlayId);
-  const settings = await chrome.storage.sync.get(defaultSettings);
+  const userSettings = await chrome.storage.sync.get(defaultSettings);
+
+  const settings = userSettings;
 
   if (settings.enabled) {
     if (!overlay) {
@@ -31,7 +33,6 @@ async function updateOverlay() {
       backgroundColor: settings.color,
       opacity: settings.opacity,
     });
-
   } else if (overlay) {
     // 3. FADE OUT AND REMOVE THE OVERLAY IF DISABLED
     overlay.style.opacity = "0";
