@@ -2,6 +2,7 @@
   "manifest_version": 3,
   "name": "Telsia",
   "author": "George Forse",
+  "homepage_url": "https://bitwarden.com",
   "version": "1.0",
   "description": "Reduces eye strain with a custom colour overlay. Improves readability for users with Dyslexia, Irlen's Syndrome and Visual Stress.",
   "icons": {

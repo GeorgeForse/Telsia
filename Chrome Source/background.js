@@ -2,9 +2,9 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === "install" || details.reason === "update") {
     // Set initial default settings for the extension
     await chrome.storage.sync.set({
-      enabled: false, // Default to false as per user's request
-      color: "#FADADD", // Default color from popup.js
-      opacity: 0.25, // Default opacity from popup.js
+      enabled: false,
+      color: "#FADADD",
+      opacity: 0.25,
     });
 
     // Onboarding logic
