@@ -23,7 +23,7 @@ async function updateOverlay() {
         // Add transition for smooth animation of color and opacity
         transition: "background-color 0.3s ease, opacity 0.3s ease",
       });
-      document.body.appendChild(overlay);
+      document.documentElement.appendChild(overlay);
     }
 
     // 2. APPLY SETTINGS (triggers animation)

@@ -8,9 +8,11 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     });
 
     // Onboarding logic
-    const managedConfig = await chrome.storage.managed.get("disableOnboarding");
-    if (!managedConfig.disableOnboarding) {
-      chrome.tabs.create({ url: "onboarding.html" });
+    if (details.reason === "install") {
+      const managedConfig = await chrome.storage.managed.get("disableOnboarding");
+      if (!managedConfig.disableOnboarding) {
+        chrome.tabs.create({ url: "onboarding.html" });
+      }
     }
 
     // Inject content script into existing tabs
