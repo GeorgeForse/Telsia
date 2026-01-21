@@ -7,7 +7,7 @@ Telsia: Eye Strain Reduction
 
 | Browser   | Install from  | Status |
 | :-------: | ------------ | ------ |
-| <img src="https://github.com/user-attachments/assets/5463ef88-873b-4516-8514-5277664cfde7" alt="Get Telsia for Chromium"> | <a href="https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm">Chrome Web Store</a> | v1.0 Available, v1.1.0 Submitted for Review
+| <img src="https://github.com/user-attachments/assets/5463ef88-873b-4516-8514-5277664cfde7" alt="Get Telsia for Chromium"> | <a href="https://chromewebstore.google.com/detail/telsia-eye-strain-reducti/iakkmikmbknfcffhalijnhijblikoldc">Chrome Web Store</a> | v1.0 Available, v1.1.0 Submitted for Review
 | <img src="https://github.com/user-attachments/assets/3a7569f8-688b-4eb1-a643-8d0fe173aefe" alt="Get Telsia for Microsoft Edge"> | <a href="#">Edge Add-ons</a> | v1.1.0 Submitted for Publishing
 | <img src="https://github.com/user-attachments/assets/b0136512-56a5-4856-8c50-4971c957a24f" alt="Get Telsia for Firefox"> | <a href="https://addons.mozilla.org/en-US/firefox/addon/telsia-eye-strain-reduction/">Firefox Add-ons</a> | v1.1.0 Submitted for Publishing
 | <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg" height="50" alt="Get Telsia through GitHub"> | <a href="https://github.com/GeorgeForse/Telsia/releases">GitHub - Releases</a> | Manually install releases for Firefox and Chromium-based browsers. These do not auto-update.
