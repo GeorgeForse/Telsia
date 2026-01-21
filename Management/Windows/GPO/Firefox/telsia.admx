@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitions revision="1.0" schemaVersion="1.0">
+  <policyNamespaces>
+    <target prefix="telsia" namespace="Mozilla.Policies.telsia" />
+    <using prefix="Mozilla" namespace="Mozilla.Policies"/>
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0" />
+  <supportedOn>
+    <definitions>
+      <definition name="SUPPORTED_WIN7" displayName="$(string.SUPPORTED_WIN7)" />
+    </definitions>
+  </supportedOn>
+  <categories>
+    <category name="Cat_Mozilla" displayName="$(string.Cat_Mozilla)"/>
+    <category name="CAT_TELSIA_ROOT" displayName="$(string.CAT_TELSIA_ROOT)" />
+  </categories>
+  <policies>
+    <policy name="DisableOnboarding" class="Machine" displayName="$(string.DisableOnboarding_displayName)" explainText="$(string.DisableOnboarding_explainText)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\telsia@telsia.org" valueName="disableOnboarding">
+      <parentCategory ref="CAT_TELSIA_ROOT" />
+      <supportedOn ref="SUPPORTED_WIN7" />
+      <enabledValue>
+        <string>true</string>
+      </enabledValue>
+      <disabledValue>
+        <string>false</string>
+      </disabledValue>
+    </policy>
+  </policies>
+</policyDefinitions>

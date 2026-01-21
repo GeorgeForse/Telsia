@@ -1,7 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <link href="fonts.css" rel="stylesheet" type="text/css" />
+    <script src="browser-polyfill.js"></script>
     <title>Telsia Settings</title>
     <style>
       body {
@@ -132,7 +133,9 @@
         padding: 8px 6px; /* Increased padding for better look */
         font-size: 12px;
         cursor: pointer;
-        transition: background-color 0.2s ease, color 0.2s ease;
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease;
       }
       .preset-button:hover {
         filter: brightness(1.1); /* Slightly brighten on hover */

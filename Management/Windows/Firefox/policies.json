@@ -1,0 +1,11 @@
+{
+  "policies": {
+    "3rdparty": {
+      "Extensions": {
+        "telsia@telsia.org": {
+          "disableOnboarding": "true"
+        }
+      }
+    }
+  }
+}

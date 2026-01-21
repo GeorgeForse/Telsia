@@ -4,7 +4,7 @@
   "short_name": "Telsia",
   "author": "George Forse",
   "homepage_url": "https://telsia.org",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Reduces eye strain with a custom colour overlay. Improves readability for users with Dyslexia, Irlen's Syndrome and Visual Stress.",
   "icons": {
     "48": "images/icon48.png",
@@ -22,7 +22,8 @@
     }
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
   "storage": {
     "managed_schema": "schema.json"

@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   const saveSettings = async () => {
-    await chrome.storage.sync.set({
+    await browser.storage.sync.set({
       enabled: toggle.checked,
       color: colorPicker.value,
       opacity: parseFloat(opacitySlider.value),
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // --- Initialization ---
 
   // Load initial settings from storage.
-  const initialSettings = await chrome.storage.sync.get({
+  const initialSettings = await browser.storage.sync.get({
     enabled: false,
     color: "#7f7f7f",
     opacity: 0.3,
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         "- Intensity: Adjust the transparency of the overlay.\n" +
         "- Presets: Quickly select a pre-configured setting.\n\n" +
         "Telsia is unable to add an overlay to internal browser pages such as the New Tab Page and Settings pages due to limitations of the extension system.\n\n" +
-        "If this extension is managed by your organization, some settings may be disabled."
+        "If this extension is managed by your organization, some settings may be disabled.",
     );
   });
 
