@@ -2,7 +2,8 @@
 <html>
   <head>
     <link href="fonts.css" rel="stylesheet" type="text/css" />
-    <script src="browser-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="lib/coloris/coloris.min.css" />
+
     <title>Telsia Settings</title>
     <style>
       body {
@@ -109,6 +110,17 @@
       input[type="range"] {
         cursor: pointer;
       }
+      input {
+        width: 150px;
+        height: 32px;
+        padding: 0 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        box-sizing: border-box;
+      }
       /* Preset Styles */
       .preset-group h3 {
         font-size: 14px;
@@ -140,6 +152,15 @@
       .preset-button:hover {
         filter: brightness(1.1); /* Slightly brighten on hover */
       }
+      .preset-swatch {
+        flex: 0 0 auto;
+      }
+      /* Ensure Coloris picker floats above popup UI and isn't forced inline/clipped */
+      .clr-picker {
+        position: fixed !important;
+        z-index: 2147483647 !important;
+        /* allow Coloris to set `left`/`top` so it positions next to the input */
+      }
     </style>
   </head>
   <body>
@@ -166,17 +187,24 @@
     ></div>
     <div class="container">
       <label for="colour-picker">Colour</label>
-      <input type="color" id="colour-picker" />
+      <input type="text" class="coloris" id="colour-picker" data-coloris />
     </div>
     <div class="container">
       <label for="opacity-slider">Intensity</label>
-      <input type="range" id="opacity-slider" min="0" max="1" step="0.01" />
+      <input
+        type="range"
+        id="opacity-slider"
+        min="0.05"
+        max="0.85"
+        step="0.01"
+      />
     </div>
 
     <hr />
     <span class="subtitle">Presets</span>
     <div id="presets-container"></div>
 
-    <script src="popup.js"></script>
+    <script src="lib/coloris/coloris.min.js"></script>
+    <script src="popup.clean.js"></script>
   </body>
 </html>

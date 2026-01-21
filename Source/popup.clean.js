@@ -40,14 +40,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // --- Helper Functions ---
 
-  // Function to determine if a hex color is dark or light
   const isColorDark = (hexColor) => {
-    const r = parseInt(hexColor.substring(1, 3), 16);
-    const g = parseInt(hexColor.substring(3, 5), 16);
-    const b = parseInt(hexColor.substring(5, 7), 16);
-    // Perceived luminance (ITU-R BT.709)
-    const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-    return luminance < 0.5; // Adjust threshold as needed
+    try {
+      const r = parseInt(hexColor.substring(1, 3), 16);
+      const g = parseInt(hexColor.substring(3, 5), 16);
+      const b = parseInt(hexColor.substring(5, 7), 16);
+      const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+      return luminance < 0.5;
+    } catch (e) {
+      return false;
+    }
   };
 
   const updateUiState = () => {
@@ -59,7 +61,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   const saveSettings = async () => {
-    await browser.storage.sync.set({
+    await chrome.storage.sync.set({
       enabled: toggle.checked,
       color: colorPicker.value,
       opacity: parseFloat(opacitySlider.value),
@@ -79,14 +81,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       toggle.disabled = true;
       let countdown = 10;
       toggleWarning.innerHTML = `Too many toggles!<br>Re-enabling in ${countdown}s...`;
+      // Use textContent with pre-line to show newline safely
+      toggleWarning.style.whiteSpace = "pre-line";
+      toggleWarning.textContent = `Too many toggles!\nRe-enabling in ${countdown}s...`;
       const interval = setInterval(() => {
         countdown--;
         if (countdown > 0) {
-          toggleWarning.innerHTML = `Too many toggles!<br>Re-enabling in ${countdown}s...`;
+          toggleWarning.textContent = `Too many toggles!\nRe-enabling in ${countdown}s...`;
         } else {
           clearInterval(interval);
           toggle.disabled = false;
-          toggleWarning.innerHTML = "";
+          toggleWarning.textContent = "";
           toggleTimestamps = [];
         }
       }, 1000);
@@ -94,10 +99,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   const populatePresets = () => {
+    // Clear previous contents safely
+    presetsContainer.textContent = "";
     presets.forEach((group) => {
       const groupEl = document.createElement("div");
       groupEl.className = "preset-group";
-      groupEl.innerHTML = `<h3>${group.group}</h3>`;
+      const h3 = document.createElement("h3");
+      h3.textContent = group.group;
+      groupEl.appendChild(h3);
 
       const buttonsContainer = document.createElement("div");
       buttonsContainer.className = "preset-buttons";
@@ -107,11 +116,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         button.className = "preset-button";
         button.dataset.color = preset.color;
         button.dataset.opacity = preset.opacity;
-        // Apply background color directly to the button
+        // Apply background color directly to the button (no transparency on the button)
         button.style.backgroundColor = preset.color;
         // Set text color based on background luminance for readability
         button.style.color = isColorDark(preset.color) ? "#fff" : "#333";
-        button.innerHTML = `<span class="preset-name">${preset.name}</span>`;
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "preset-name";
+        nameSpan.textContent = preset.name;
+        button.appendChild(nameSpan);
         buttonsContainer.appendChild(button);
       });
 
@@ -121,35 +133,51 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   // --- Initialization ---
-
-  // Load initial settings from storage.
-  const initialSettings = await browser.storage.sync.get({
+  const initialSettings = await chrome.storage.sync.get({
     enabled: false,
     color: "#7f7f7f",
     opacity: 0.3,
   });
 
-  // Set the initial state of the UI controls.
   toggle.checked = initialSettings.enabled;
   opacitySlider.value = initialSettings.opacity;
   colorPicker.value = initialSettings.color;
 
-  // Create the preset buttons.
-  populatePresets();
+  // Ensure Coloris wrapper preview uses the initial value (some listeners run earlier)
+  try {
+    // Update wrapper color if Coloris wrapped the input
+    const wrapper = colorPicker.parentElement;
+    if (
+      wrapper &&
+      wrapper.classList &&
+      wrapper.classList.contains("clr-field")
+    ) {
+      wrapper.style.color = colorPicker.value;
+    }
+    // Notify Coloris/listeners about the initial value
+    colorPicker.dispatchEvent(new Event("input", { bubbles: true }));
+    colorPicker.dispatchEvent(new Event("change", { bubbles: true }));
+  } catch (err) {
+    console.warn("Error setting initial Coloris preview:", err);
+  }
 
-  // Set the initial enabled/disabled state of the controls.
+  populatePresets();
   updateUiState();
 
   helpIcon.addEventListener("click", () => {
-    alert(
-      "Telsia is a screen overlay tool to help with visual stress.\n\n" +
-        "- Enable/Disable: Turn the overlay on or off.\n" +
-        "- Colour: Choose a colour for the overlay.\n" +
-        "- Intensity: Adjust the transparency of the overlay.\n" +
-        "- Presets: Quickly select a pre-configured setting.\n\n" +
-        "Telsia is unable to add an overlay to internal browser pages such as the New Tab Page and Settings pages due to limitations of the extension system.\n\n" +
-        "If this extension is managed by your organization, some settings may be disabled.",
-    );
+    const url =
+      typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.getURL
+        ? chrome.runtime.getURL("onboarding.html")
+        : "onboarding.html";
+    try {
+      if (typeof chrome !== "undefined" && chrome.tabs && chrome.tabs.create) {
+        chrome.tabs.create({ url });
+      } else {
+        window.open(url, "_blank");
+      }
+    } catch (e) {
+      window.open(url, "_blank");
+    }
   });
 
   toggle.addEventListener("change", () => {
@@ -167,7 +195,36 @@ document.addEventListener("DOMContentLoaded", async () => {
       const { color, opacity } = button.dataset;
       colorPicker.value = color;
       opacitySlider.value = opacity;
+      // Notify listeners and update Coloris wrapper preview (if present)
+      try {
+        colorPicker.dispatchEvent(new Event("input", { bubbles: true }));
+        colorPicker.dispatchEvent(new Event("change", { bubbles: true }));
+        const wrapper = colorPicker.parentElement;
+        if (wrapper && wrapper.classList.contains("clr-field")) {
+          wrapper.style.color = color;
+        }
+      } catch (err) {
+        console.warn("Error updating Coloris preview:", err);
+      }
+
       saveSettings(); // Save immediately on preset click
     }
   });
+
+  // Initialize Coloris (library is loaded from popup.html).
+  // Set parent to `body` and force `inline: false` so the picker floats above the popup UI.
+  if (typeof Coloris !== "undefined") {
+    try {
+      Coloris({
+        el: ".coloris",
+        parent: "body",
+        inline: false,
+        wrap: false,
+        alpha: false,
+        forceAlpha: false,
+      });
+    } catch (e) {
+      console.warn("Coloris init failed:", e);
+    }
+  }
 });

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>Welcome to Telsia!</title>
@@ -15,7 +15,16 @@
         font-size: 48px;
         font-weight: bold;
       }
+      h2 {
+        font-size: 32px;
+        font-weight: bold;
+        margin-top: 32px;
+        margin-bottom: 16px;
+      }
       p {
+        font-size: 24px;
+      }
+      li {
         font-size: 24px;
       }
       video {
@@ -40,6 +49,35 @@
       open the settings panel.
     </p>
     <video src="images/onboarding.mp4" autoplay loop muted></video>
+    <section style="max-width: 760px; margin: 24px auto; text-align: left">
+      <h2>How to use Telsia</h2>
+      <ul>
+        <li>
+          <strong>Enable/Disable:</strong> Turn the overlay on or off using the
+          toggle in the settings panel.
+        </li>
+        <li>
+          <strong>Colour:</strong> Choose a colour for the overlay - pick a
+          preset or open the colour picker.
+        </li>
+        <li>
+          <strong>Intensity:</strong> Use the <em>Intensity</em> slider to
+          adjust transparency of the overlay.
+        </li>
+        <li>
+          <strong>Presets:</strong> Quickly select a pre-configured setting to
+          try recommended colours.
+        </li>
+      </ul>
+      <p>
+        Note: Telsia cannot add overlays to internal browser pages such as the
+        New Tab page or browser settings due to extension security restrictions.
+      </p>
+      <p>
+        If your extension is managed by an organization, some settings may be
+        disabled by your administrator.
+      </p>
+    </section>
     <script src="content.js"></script>
   </body>
 </html>
