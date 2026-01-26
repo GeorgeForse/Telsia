@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=250px, initial-scale=1.0" />
+    <title>Telsia Settings</title>
+    <meta name="manifest.type" content="browser_action" />
+    <script type="module" src="./main.js"></script>
+  </head>
+  <body>
+    <div class="title-container">
+      <span class="title">Telsia Settings</span>
+      <span id="help-icon" class="help-icon" title="Click for help">?</span>
+    </div>
+    <hr />
+    <div class="container">
+      <span>Enable Overlay</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="enabled-toggle" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div
+      id="toggle-warning"
+      style="
+        color: red;
+        font-size: 12px;
+        text-align: center;
+        margin-bottom: 12px;
+      "
+    ></div>
+    <div class="container">
+      <label for="colour-picker">Colour</label>
+      <input type="text" class="coloris" id="colour-picker" data-coloris />
+    </div>
+    <div class="container">
+      <label for="opacity-slider">Intensity</label>
+      <input
+        type="range"
+        id="opacity-slider"
+        min="0.05"
+        max="0.85"
+        step="0.01"
+      />
+    </div>
+
+    <hr />
+    <span class="subtitle">Presets</span>
+    <div id="presets-container"></div>
+  </body>
+</html>

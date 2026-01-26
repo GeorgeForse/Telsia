@@ -1,6 +1,3 @@
-// Ensure the polyfill is loaded first for consistent browser API usage.
-import "./browser-polyfill.js";
-
 browser.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === "install" || details.reason === "update") {
     // Set initial default settings for the extension

@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Welcome to Telsia!</title>
+    <style>
+      /* latin */
+      @font-face {
+        font-family: "Lexend";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("/fonts/Lexend-Regular.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* latin */
+      @font-face {
+        font-family: "Lexend";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("/fonts/Lexend-Bold.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      body {
+        font-family: "Lexend";
+        margin: 20px;
+        text-align: center;
+        background-color: antiquewhite;
+        color: rgb(85, 76, 85);
+      }
+      h1 {
+        font-size: 48px;
+        font-weight: bold;
+      }
+      h2 {
+        font-size: 32px;
+        font-weight: bold;
+        margin-top: 32px;
+        margin-bottom: 16px;
+      }
+      p {
+        font-size: 24px;
+      }
+      li {
+        font-size: 24px;
+      }
+      video {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        filter: sepia(0.25);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to Telsia!</h1>
+    <img src="/icon/128.png" alt="Telsia Icon" />
+    <p>
+      Telsia alleviates digital eye strain and related symptoms by applying a
+      customizable colour overlay.
+    </p>
+    <p>
+      To begin, pin the Telsia icon to your browser toolbar and select it to
+      open the settings panel.
+    </p>
+    <video src="images/onboarding.mp4" autoplay loop muted></video>
+    <section style="max-width: 760px; margin: 24px auto; text-align: left">
+      <h2>How to use Telsia</h2>
+      <ul>
+        <li>
+          <strong>Enable/Disable:</strong> Turn the overlay on or off using the
+          toggle in the settings panel.
+        </li>
+        <li>
+          <strong>Colour:</strong> Choose a colour for the overlay - pick a
+          preset or open the colour picker.
+        </li>
+        <li>
+          <strong>Intensity:</strong> Use the <em>Intensity</em> slider to
+          adjust transparency of the overlay.
+        </li>
+        <li>
+          <strong>Presets:</strong> Quickly select a pre-configured setting to
+          try recommended colours.
+        </li>
+      </ul>
+      <p>
+        Note: Telsia cannot add overlays to internal browser pages such as the
+        New Tab page or browser settings due to extension security restrictions.
+      </p>
+      <p>
+        If your extension is managed by an organization, some settings may be
+        disabled by your administrator.
+      </p>
+    </section>
+    <script src="main.js"></script>
+  </body>
+</html>
