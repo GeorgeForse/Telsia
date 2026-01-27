@@ -1,6 +1,6 @@
 export const defaultSettings = {
   enabled: false,
-  color: "#FADADD",
+  color: "#fadadd",
   opacity: 0.25,
   mixBlendMode: "normal",
 };
