@@ -27,11 +27,14 @@
           U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
           U+2212, U+2215, U+FEFF, U+FFFD;
       }
+      :root {
+        color-scheme: light dark;
+      }
       body {
         font-family: "Lexend";
         margin: 20px;
         text-align: center;
-        background-color: antiquewhite;
+        background-color: #eae8de;
         color: rgb(85, 76, 85);
       }
       h1 {
@@ -49,6 +52,8 @@
       }
       li {
         font-size: 24px;
+        margin-top: 22px;
+        margin-bottom: 22px;
       }
       video {
         width: 100%;
@@ -58,11 +63,27 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         filter: sepia(0.25);
       }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #202124;
+          color: #e8eaed;
+        }
+      }
+      .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+      }
     </style>
   </head>
   <body>
-    <h1>Welcome to Telsia!</h1>
-    <img src="/icon/128.png" alt="Telsia Icon" />
+    <div class="header-container">
+      <a href="https://telsia.org/" target="_blank"
+        ><img src="/icon/128.png" alt="Telsia Icon" width="96" height="96"
+      /></a>
+      <h1>Welcome to Telsia!</h1>
+    </div>
     <p>
       Telsia alleviates digital eye strain and related symptoms by applying a
       customizable colour overlay.
@@ -80,16 +101,26 @@
           toggle in the settings panel.
         </li>
         <li>
-          <strong>Colour:</strong> Choose a colour for the overlay - pick a
-          preset or open the colour picker.
+          <strong>Colour:</strong> Choose a colour for the overlay by typing in
+          a colour HEX code (e.g. #fadadd) or using the colour picker.
         </li>
         <li>
           <strong>Intensity:</strong> Use the <em>Intensity</em> slider to
           adjust transparency of the overlay.
         </li>
         <li>
+          <strong>Blend Mode:</strong> Select a <em>Blend Mode</em> to apply the
+          overlay with. We recommend Normal for most people, but Multiply is
+          best for conserving contrast for dark text on light backgrounds.
+        </li>
+        <li>
           <strong>Presets:</strong> Quickly select a pre-configured setting to
           try recommended colours.
+        </li>
+        <li>
+          <strong>Make it yours!</strong> We encourage you to experiment with
+          different settings to find out what works best for
+          <strong>you</strong>.
         </li>
       </ul>
       <p>
@@ -101,6 +132,6 @@
         disabled by your administrator.
       </p>
     </section>
-    <script src="main.js"></script>
+    <script type="module" src="./main.js"></script>
   </body>
 </html>

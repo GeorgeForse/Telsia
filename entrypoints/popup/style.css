@@ -23,11 +23,16 @@
     U+2215, U+FEFF, U+FFFD;
 }
 
+:root {
+  color-scheme: light dark;
+}
+
 body {
   font-family: "Lexend";
   margin: 12px;
   min-width: 280px; /* Increased width for presets */
   background-color: #eae8de;
+  color: rgb(85, 76, 85);
 }
 .title-container {
   display: flex;
@@ -48,9 +53,9 @@ body {
   background-color: #f0f0f0;
 }
 .subtitle {
+  display: block;
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 8px;
 }
 .container {
   display: flex;
@@ -127,8 +132,11 @@ input[type="color"]::-webkit-color-swatch {
 }
 input[type="range"] {
   cursor: pointer;
+  padding: 0;
+  border: none;
 }
-input {
+input,
+select {
   width: 150px;
   height: 32px;
   padding: 0 10px;
@@ -140,11 +148,6 @@ input {
   box-sizing: border-box;
 }
 /* Preset Styles */
-.preset-group h3 {
-  font-size: 14px;
-  color: #666;
-  margin: 12px 0 8px 0;
-}
 .preset-name {
   font-family: "Lexend";
   font-size: 16px;
@@ -178,4 +181,38 @@ input {
   position: fixed !important;
   z-index: 2147483647 !important;
   /* allow Coloris to set `left`/`top` so it positions next to the input */
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #202124;
+    color: #e8eaed;
+  }
+  .container {
+    color: #e8eaed;
+  }
+  .help-icon:hover {
+    background-color: #3c4043;
+  }
+  hr {
+    border-top-color: #5f6368;
+  }
+  .slider {
+    background-color: #5f6368;
+  }
+  .slider:before {
+    background-color: #dadce0;
+  }
+  input,
+  select {
+    background-color: #292a2d;
+    border-color: #5f6368;
+    color: #e8eaed;
+  }
+  input[type="range"] {
+    background-color: transparent;
+  }
+  .preset-button {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
 }

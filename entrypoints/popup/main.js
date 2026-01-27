@@ -1,8 +1,16 @@
+import "./style.css";
+import "@melloware/coloris/dist/coloris.css";
+import Coloris from "@melloware/coloris";
+
+Coloris.init();
+Coloris({ el: "#colour-picker" });
+
 document.addEventListener("DOMContentLoaded", async () => {
   // --- DOM Elements ---
   const toggle = document.getElementById("enabled-toggle");
   const opacitySlider = document.getElementById("opacity-slider");
   const colorPicker = document.getElementById("colour-picker");
+  const blendModeSelect = document.getElementById("blend-mode");
   const toggleWarning = document.getElementById("toggle-warning");
   const presetsContainer = document.getElementById("presets-container");
   const helpIcon = document.getElementById("help-icon");
@@ -13,29 +21,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // --- Data ---
   const presets = [
-    {
-      group: "Warm & Calming Tones",
-      colors: [
-        { name: "Soft Rose", color: "#FADADD", opacity: 0.25 },
-        { name: "Warm Peach", color: "#FFDAB9", opacity: 0.25 },
-        { name: "Golden Yellow", color: "#FFFACD", opacity: 0.25 },
-      ],
-    },
-    {
-      group: "Cool & Focused Tones",
-      colors: [
-        { name: "Sky Blue", color: "#ADD8E6", opacity: 0.25 },
-        { name: "Aqua Marine", color: "#AFEEEE", opacity: 0.25 },
-        { name: "Seafoam Green", color: "#B2D8B2", opacity: 0.25 },
-      ],
-    },
-    {
-      group: "Neutral & Muted Tones",
-      colors: [
-        { name: "Calm Lavender", color: "#E6E6FA", opacity: 0.25 },
-        { name: "Cool Grey", color: "#D3D3D3", opacity: 0.3 },
-      ],
-    },
+    { name: "Soft Rose", color: "#fadadd", opacity: 0.25 },
+    { name: "Warm Peach", color: "#ffdab9", opacity: 0.25 },
+    { name: "Golden Yellow", color: "#fffacd", opacity: 0.25 },
+    { name: "Sky Blue", color: "#add8e6", opacity: 0.25 },
+    { name: "Aqua Marine", color: "#afeeee", opacity: 0.25 },
+    { name: "Seafoam Green", color: "#b2d8b2", opacity: 0.25 },
+    { name: "Calm Lavender", color: "#e6e6fa", opacity: 0.25 },
+    { name: "Cool Grey", color: "#d3d3d3", opacity: 0.3 },
   ];
 
   // --- Helper Functions ---
@@ -56,15 +49,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     const isEnabled = toggle.checked;
     opacitySlider.disabled = !isEnabled;
     colorPicker.disabled = !isEnabled;
+    blendModeSelect.disabled = !isEnabled;
     presetsContainer.style.opacity = isEnabled ? 1 : 0.5;
     presetsContainer.style.pointerEvents = isEnabled ? "auto" : "none";
   };
 
   const saveSettings = async () => {
-    await chrome.storage.sync.set({
+    await browser.storage.sync.set({
       enabled: toggle.checked,
       color: colorPicker.value,
       opacity: parseFloat(opacitySlider.value),
+      mixBlendMode: blendModeSelect.value,
     });
   };
 
@@ -101,47 +96,40 @@ document.addEventListener("DOMContentLoaded", async () => {
   const populatePresets = () => {
     // Clear previous contents safely
     presetsContainer.textContent = "";
-    presets.forEach((group) => {
-      const groupEl = document.createElement("div");
-      groupEl.className = "preset-group";
-      const h3 = document.createElement("h3");
-      h3.textContent = group.group;
-      groupEl.appendChild(h3);
+    const buttonsContainer = document.createElement("div");
+    buttonsContainer.className = "preset-buttons";
 
-      const buttonsContainer = document.createElement("div");
-      buttonsContainer.className = "preset-buttons";
-
-      group.colors.forEach((preset) => {
-        const button = document.createElement("button");
-        button.className = "preset-button";
-        button.dataset.color = preset.color;
-        button.dataset.opacity = preset.opacity;
-        // Apply background color directly to the button (no transparency on the button)
-        button.style.backgroundColor = preset.color;
-        // Set text color based on background luminance for readability
-        button.style.color = isColorDark(preset.color) ? "#fff" : "#333";
-        const nameSpan = document.createElement("span");
-        nameSpan.className = "preset-name";
-        nameSpan.textContent = preset.name;
-        button.appendChild(nameSpan);
-        buttonsContainer.appendChild(button);
-      });
-
-      groupEl.appendChild(buttonsContainer);
-      presetsContainer.appendChild(groupEl);
+    presets.forEach((preset) => {
+      const button = document.createElement("button");
+      button.className = "preset-button";
+      button.dataset.color = preset.color;
+      button.dataset.opacity = preset.opacity;
+      // Apply background color directly to the button (no transparency on the button)
+      button.style.backgroundColor = preset.color;
+      // Set text color based on background luminance for readability
+      button.style.color = isColorDark(preset.color) ? "#fff" : "#333";
+      const nameSpan = document.createElement("span");
+      nameSpan.className = "preset-name";
+      nameSpan.textContent = preset.name;
+      button.appendChild(nameSpan);
+      buttonsContainer.appendChild(button);
     });
+
+    presetsContainer.appendChild(buttonsContainer);
   };
 
   // --- Initialization ---
-  const initialSettings = await chrome.storage.sync.get({
+  const initialSettings = await browser.storage.sync.get({
     enabled: false,
     color: "#7f7f7f",
     opacity: 0.3,
+    mixBlendMode: "normal",
   });
 
   toggle.checked = initialSettings.enabled;
   opacitySlider.value = initialSettings.opacity;
   colorPicker.value = initialSettings.color;
+  blendModeSelect.value = initialSettings.mixBlendMode || "normal";
 
   // Ensure Coloris wrapper preview uses the initial value (some listeners run earlier)
   try {
@@ -166,12 +154,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   helpIcon.addEventListener("click", () => {
     const url =
-      typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.getURL
-        ? chrome.runtime.getURL("onboarding.html")
+      typeof browser !== "undefined" &&
+      browser.runtime &&
+      browser.runtime.getURL
+        ? browser.runtime.getURL("onboarding.html")
         : "onboarding.html";
     try {
-      if (typeof chrome !== "undefined" && chrome.tabs && chrome.tabs.create) {
-        chrome.tabs.create({ url });
+      if (
+        typeof browser !== "undefined" &&
+        browser.tabs &&
+        browser.tabs.create
+      ) {
+        browser.tabs.create({ url });
       } else {
         window.open(url, "_blank");
       }
@@ -188,6 +182,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   colorPicker.addEventListener("input", throttledSave);
   opacitySlider.addEventListener("input", throttledSave);
+  blendModeSelect.addEventListener("change", saveSettings);
 
   presetsContainer.addEventListener("click", (e) => {
     const button = e.target.closest(".preset-button");
@@ -216,12 +211,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (typeof Coloris !== "undefined") {
     try {
       Coloris({
-        el: ".coloris",
+        el: "#colour-picker",
         parent: "body",
         inline: false,
         wrap: false,
         alpha: false,
         forceAlpha: false,
+        themeMode: "auto",
       });
     } catch (e) {
       console.warn("Coloris init failed:", e);

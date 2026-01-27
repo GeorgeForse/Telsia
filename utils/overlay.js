@@ -1,11 +1,13 @@
-const defaultSettings = { enabled: false, color: "#FADADD", opacity: 0.25 };
-const overlayId = "TelsiaOverlay";
+export const defaultSettings = {
+  enabled: false,
+  color: "#FADADD",
+  opacity: 0.25,
+  mixBlendMode: "normal",
+};
+export const overlayId = "TelsiaOverlay";
 
-async function updateOverlay() {
+export function updateOverlayDOM(settings) {
   let overlay = document.getElementById(overlayId);
-  const userSettings = await browser.storage.sync.get(defaultSettings);
-
-  const settings = userSettings;
 
   if (settings.enabled) {
     if (!overlay) {
@@ -23,7 +25,11 @@ async function updateOverlay() {
         // Add transition for smooth animation of color and opacity
         transition: "background-color 0.3s ease, opacity 0.3s ease",
       });
-      document.documentElement.appendChild(overlay);
+      if (document.body) {
+        document.body.appendChild(overlay);
+      } else {
+        document.documentElement.appendChild(overlay);
+      }
     }
 
     // 2. APPLY SETTINGS (triggers animation)
@@ -32,6 +38,7 @@ async function updateOverlay() {
     Object.assign(overlay.style, {
       backgroundColor: settings.color,
       opacity: settings.opacity,
+      mixBlendMode: settings.mixBlendMode || "normal",
     });
   } else if (overlay) {
     // 3. FADE OUT AND REMOVE THE OVERLAY IF DISABLED
@@ -42,11 +49,3 @@ async function updateOverlay() {
     }, 300); // Must match the transition duration
   }
 }
-
-// --- Event Listeners ---
-
-// Update the overlay when settings are changed in the popup
-browser.storage.sync.onChanged.addListener(updateOverlay);
-
-// Update the overlay when the script is first loaded (e.g., on a new page)
-updateOverlay();

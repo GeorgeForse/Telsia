@@ -1,25 +1,24 @@
 {
   "name": "telsia",
-  "version": "1.1.1",
-  "description": "Build scripts for the Telsia browser extension.",
+  "description": "manifest.json description",
   "private": true,
+  "version": "1.2.0",
+  "type": "module",
   "scripts": {
-    "clean": "echo \"Cleaning Builds and Release folders...\" && npx rimraf Builds Release",
-    "build:base:chrome": "echo \"Copying base files for Chrome...\" && npx cpx2 \"Source/**/*\" Builds/chrome --ignore \"Source/**/*.chrome.js,Source/**/*.firefox.js\" && npx cpx2 \"Source/**/*.chrome.js\" Builds/chrome && node -e \"const fs=require('fs'),p=require('path');(function w(d){for(const e of fs.readdirSync(d,{withFileTypes:true})){const fp=p.join(d,e.name);if(e.isDirectory())w(fp);else if(e.name.endsWith('.chrome.js'))fs.renameSync(fp,p.join(p.dirname(fp),e.name.replace('.chrome.js','.js')))}})(\\\"Builds/chrome\\\")\"",
-    "update:version:chrome": "echo \"Updating Chrome manifest version...\" && node scripts/update-manifest-version.mjs Builds/chrome/manifest.json",
-    "build:chrome": "echo \"Building Chrome version...\" && npm run build:base:chrome && npm run update:version:chrome",
-    "build:base:firefox": "echo \"Copying base files for Firefox...\" && npx cpx2 \"Source/**/*\" Builds/firefox --ignore \"Source/**/*.chrome.js,Source/**/*.firefox.js\" && npx cpx2 \"Source/**/*.firefox.js\" Builds/firefox && node -e \"const fs=require('fs'),p=require('path');(function w(d){for(const e of fs.readdirSync(d,{withFileTypes:true})){const fp=p.join(d,e.name);if(e.isDirectory())w(fp);else if(e.name.endsWith('.firefox.js'))fs.renameSync(fp,p.join(p.dirname(fp),e.name.replace('.firefox.js','.js')))}})(\\\"Builds/firefox\\\")\"",
-    "update:version:firefox": "echo \"Updating Firefox manifest version...\" && node scripts/update-manifest-version.mjs Builds/firefox/manifest.json",
-    "build:firefox": "echo \"Building Firefox version...\" && npm run build:base:firefox && npm run update:version:firefox",
-    "build": "echo \"Starting full build...\" && npm run clean && npm run build:chrome && npm run build:firefox && echo \"Builds complete.\"",
-    "package:chrome": "echo \"Packaging Chrome version...\" && node package.mjs Builds/chrome Release/telsia-chrome",
-    "package:firefox": "echo \"Packaging Firefox version...\" && node package.mjs Builds/firefox Release/telsia-firefox",
-    "package": "echo \"Starting full package process...\" && npm run build && npm run package:chrome && npm run package:firefox && echo \"All packages created in Release folder.\""
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox --mv3",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox --mv3",
+    "compile": "tsc --noEmit",
+    "postinstall": "wxt prepare"
   },
   "devDependencies": {
-    "@zip.js/zip.js": "^2.8.15",
-    "cpx2": "^8.0.0",
-    "cpy-cli": "^6.0.0",
-    "rimraf": "^6.1.2"
+    "typescript": "^5.9.3",
+    "wxt": "^0.20.6"
+  },
+  "dependencies": {
+    "@melloware/coloris": "^0.25.0"
   }
 }

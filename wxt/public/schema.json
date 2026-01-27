@@ -1,9 +1,0 @@
-{
-  "type": "object",
-  "properties": {
-    "disableOnboarding": {
-      "type": "boolean",
-      "description": "Disable the first run onboarding experience."
-    }
-  }
-}
